@@ -150,8 +150,7 @@ include 'functions/visitors.php';
                       <td >
                       <div class="btn-group btn-group-toggle" data-toggle="buttons">                  
                           <label class="btn btn-primary btn-sm">
-                            <input type= "hidden" name="viscode" value ="<?= $visitor['vis_code']?>">
-                          <a href="" class="text-white"><i class="fas fa-edit"></i></a>
+                          <a href="add_form.php?code=<?= $visitor['vis_code']?>" class="text-white"><i class="fas fa-edit"></i></a>
                        </label>
                           <form method="post">
                             <input type= "hidden" name="viscode" value ="<?= $visitor['vis_code']?>">

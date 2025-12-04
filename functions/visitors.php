@@ -4,7 +4,13 @@ include 'connectdb.php';
 
 function getAllVisitors(){
     $conn = Connect();
-    $query = "SELECT vis_code, CONCAT(vis_fname, ' ',vis_lname) AS fullname,vis_date,vis_time,vis_address,vis_phone,vis_affil,vis_purpose
+    $query = "SELECT vis_code, CONCAT(vis_fname, ' ',vis_lname) AS fullname,
+            vis_date,
+            vis_time,
+            vis_address,
+            vis_phone,
+            vis_affil,
+            vis_purpose
             FROM visitors";
     $result = $conn->query($query); 
     $data=[]; //data set
@@ -61,7 +67,13 @@ function countTotalVisitors(){
 }
 function findvisitorsBySearch($find){
     $conn = Connect();
-    $query = "SELECT vis_code, CONCAT(vis_fname, ' ',vis_lname) AS fullname,vis_date,vis_time,vis_address,vis_phone,vis_affil,vis_purpose
+    $query = "SELECT vis_code, CONCAT(vis_fname, ' ',vis_lname) AS fullname,
+            vis_date,
+            vis_time,
+            vis_address,
+            vis_phone,
+            vis_affil,
+            vis_purpose
             FROM visitors
             WHERE vis_fname LIKE '%$find%' OR vis_lname LIKE '%$find%'";
     $result = $conn->query($query); 
@@ -74,7 +86,13 @@ function findvisitorsBySearch($find){
 }
 function filterVisitorsByDateRange($dateFrom, $dateTo){
     $conn = Connect();
-    $query = "SELECT CONCAT(vis_fname, ' ',vis_lname) AS fullname,vis_date,vis_time,vis_address,vis_phone,vis_affil,vis_purpose
+    $query = "SELECT CONCAT(vis_fname, ' ',vis_lname) AS fullname,
+            vis_date,
+            vis_time,
+            vis_address,
+            vis_phone,
+            vis_affil,
+            vis_purpose
             FROM visitors
             WHERE vis_date BETWEEN '$dateFrom' AND '$dateTo'";
     $result = $conn->query($query); 
@@ -123,4 +141,27 @@ function updateVisitor($vis_code, $vis_date, $vis_time, $vis_fname, $vis_lname, 
     $conn->close();
     if($result) return true;
     return $false;
+}
+function getVisitorByCode($vis_code){
+    $conn = Connect();
+    $query = "SELECT * FROM visitors WHERE vis_code = '$vis_code'";
+    $result = $conn->query($query); 
+    $data= null; //data set
+    while($row = $result->fetch_assoc()){
+        $data = $row;
+    }
+    $conn->close();
+    return $data;
+}
+function getPurposes(){
+    $conn = Connect();
+
+    $query = 'SELECT DISTINCT vis_purpose FROM visitors';
+    $result = $conn->query($query); 
+    $data=[]; //data set
+    while($row = $result->fetch_assoc()){
+        $data[] = $row;
+    }
+    $conn->close();
+    return $data;
 }
